@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container-fluid">
+	<div id="map" class="map_wrapper"></div>
+	<script>
+		function initMap() {
+			var center = {lat: 39, lng: -97};
+			var map = new google.maps.Map(document.getElementById('map'), {
+				zoom:5.1,
+				center:center,
+				zoomControl:false,
+				gestureHandling:'none',
+			});
+		}
+	</script>
+	<script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCzubALED00XuwcKBc3nzTNtQ-QzGxk9Z0&callback=initMap"></script>
+</div>
+{% endblock %}

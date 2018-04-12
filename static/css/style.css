@@ -1,0 +1,31 @@
+/* HTML Tag Styles */
+input {
+	margin: 10px;
+}
+
+
+/* Overwriting Bootstrap Styles */
+.container-fluid {
+	padding: 0;
+}
+
+
+
+/* Custom Site Styles */
+.login_form {
+	width: 300px;
+	margin: auto;
+	text-align: center;
+	border: 2px solid #aaa;
+	border-radius: 5px;
+	box-shadow: 0 0 2px 2px #b0b0b0;
+	position: relative;
+	top: 30vh;
+	padding-top: 20px;
+	padding-bottom: 10px;
+}
+
+.map_wrapper {
+	height: 100%;
+	width: 100%;
+}

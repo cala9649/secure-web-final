@@ -1,0 +1,11 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container-fluid">
+	<form class="login_form" action="/login" method="post">
+		<span class="fa fa-user"></span><input type="text" name="username" placeholder="Username"><br>
+		<span class="fa fa-key"></span><input type="password" name="password" placeholder="Password"><br>
+		<input type="submit" value="Login">
+	</form>
+</div>
+{% endblock %}
