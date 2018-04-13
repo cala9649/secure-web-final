@@ -1,4 +1,5 @@
 server.crt
 server.csr
 server.key
+settings.cfg
 __pycache__

@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="display_login">
+{% if session['authenticated'] %}
+	Welcome {{ session['displayName'] }}!
+{% else %}
+	<a href="/login">Login</a>
+{% endif %}
+</div>
+<div class="container">
+	<h1>WEBSITE</h1>
+	<a href="/map">Map</a>
+</div>
+{% endblock %}
