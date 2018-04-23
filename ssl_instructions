@@ -13,8 +13,9 @@ Run
 	openssl req -new -key server.key -out server.scr
 	openssl rsa -in server.key -out server.key
 
-	openssl genrsa -des3 -passout pass:x -out server.pass.key 2048
-	openssl rsa -passin pass:x -in server.pass.key -out server.key
+	Online Example:
+	openssl genrsa -des3 -out server.pass.key 2048
+	openssl rsa -in server.pass.key -out server.key
 	rm server.pass.key
 	openssl req -new -key server.key -out server.csr
 	openssl x509 -req -sha256 -days 365 -in server.csr -signkey server.key -out server.crt
