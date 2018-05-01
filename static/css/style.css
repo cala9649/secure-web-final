@@ -171,5 +171,5 @@ input {
 }
 
 .text-outline {
-    text-shadow: -2px -2px 1px white, -2px 2px 1px white, 2px -2px 1px white, 2px 2px 1px white;
+    text-shadow: -2px -2px 2px white, -2px 2px 2px white, 2px -2px 2px white, 2px 2px 2px white;
 }

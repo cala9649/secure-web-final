@@ -137,7 +137,7 @@ def get_bases():
 
 @login_manager.user_loader
 def load_user(user_id):
-    return User(user_id)
+    return User.query.get(user_id)
 
 @app.route('/')
 def index():
@@ -181,7 +181,6 @@ def login():
             login_user(user)
             login = Login(username, ip, True)
             db.session.add(login)
-            print(current_user)
             db.session.commit()
             return redirect('/manage')
         else:
@@ -190,9 +189,11 @@ def login():
             db.session.add(login)
             db.session.commit()
             flash("Invalid login")
-            return redirect('/login')
+            base_arr = get_bases()
+            return redirect('/login', base_arr=base_arr)
     elif request.method == "GET":
-        return render_template("login.html")
+        base_arr = get_bases()
+        return render_template("login.html", base_arr=base_arr)
 
 @app.route('/login_dashboard')
 @login_required
@@ -222,9 +223,7 @@ def logout():
 @app.route('/manage', methods=["GET", "POST"])
 @login_required
 def manage():
-    print(current_user)
     user = User.query.filter_by(userID=current_user.userID).first()
-    print(user)
     base_arr = get_bases()
     friends = Friend.query.order_by(Friend.lname)
     bases = Base.query.order_by(Base.name)
@@ -237,9 +236,9 @@ def manage():
                      "lon": escape(request.form['lon'])}
             return render_template("manage.html", friends=friends, bases=bases, details=details, admins=admins, base_arr=base_arr)
         else:
-            return render_template("manage.html", friends=friends, bases=bases, admins=admins)
+            return render_template("manage.html", friends=friends, bases=bases, admins=admins, base_arr=base_arr)
     else:
-        return render_template("manage.html", friends=friends, bases=bases, admins=admins)
+        return render_template("manage.html", friends=friends, bases=bases, admins=admins, base_arr=base_arr)
 
 @app.route('/search', methods=["GET", "POST"])
 @login_required

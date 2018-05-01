@@ -15,8 +15,13 @@
 			styles: theme,
 			disableDefaultUI: true,
 		});
+		var icons = {
+            af: {url: "{{ url_for('static', filename='images/aflogo_full.png') }}",
+            anchor: new google.maps.Point(15, 23),
+            scaledSize: new google.maps.Size(30,28),}
+        };
 		{% for base in base_arr %}
-        {{ base['varname'] }} = new google.maps.Marker({
+        var {{ base['varname'] }} = new google.maps.Marker({
             position: {lat: {{ base['lat'] }}, lng: {{ base['lon'] }}},
             icon: icons['af'],
             map: map});

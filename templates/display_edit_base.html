@@ -1,9 +1,10 @@
 {% extends "base.html" %}
 {% include "flash_messages.html" %}
+{% include "map_bg.html" %}
 
 {% block content %}
-<div class="container-fluid">
-	<div style="margin-top: 10vh;"></div>
+<div class="container">
+	<div style="padding-top: 10vh;"></div>
 	<form class="form manage_form_sm" action="/edit_base/{{ base['baseID'] }}" method="post">
 		<h2>{{ base['name'] }}</h2>
 		<hr>
