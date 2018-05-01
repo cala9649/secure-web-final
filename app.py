@@ -190,7 +190,7 @@ def login():
             db.session.commit()
             flash("Invalid login")
             base_arr = get_bases()
-            return redirect('/login', base_arr=base_arr)
+            return redirect('/login')
     elif request.method == "GET":
         base_arr = get_bases()
         return render_template("login.html", base_arr=base_arr)
