@@ -3,7 +3,8 @@
 {% block content %}
 <div class="display_login">
 {% if session['authenticated'] %}
-	Welcome {{ session['displayName'] }}!
+	Welcome {{ session['displayName'] }}!<br>
+	<a href="/manage">Manage</a>
 {% else %}
 	<a href="/login">Login</a>
 {% endif %}

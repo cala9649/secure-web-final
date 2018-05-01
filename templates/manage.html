@@ -1,0 +1,77 @@
+{% extends "base.html" %}
+
+{% block content %}
+{% with messages = get_flashed_messages(with_categories=true) %}
+  {% if messages %}
+    {% for category, message in messages %}
+    <div class="alert" style="{% if category == 'success' %}background: #5c5{% elif category == 'error' %}background: #f00{% endif %}">
+    <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;
+    </span>
+    {{ message }}<br>
+    {% endfor %}
+    </div>
+  {% endif %}
+{% endwith %}
+<div class="container" style="display: flex;">
+	<div class="manage_flex_child">
+		<h2>Add Base</h2>
+			<hr>
+			<h3>Search</h3>
+			<form class="form manage_form_sm" action="/search" method="post">
+				</span><input type="text" name="base" placeholder="Base Name" style="float: none" required></input>
+				<input type="submit" value="Search">
+			</form>
+			<hr>
+			<h3>{% if details %}Results{% else %}Manually{% endif %}</h3>
+			<form class="form manage_form_sm" action="/add_base" method="post">
+				<span class="manage_form_label">Name:</span><input type="text" name="name"{% if details %} value="{{ details['name'] }}{% endif %}" required><br><div class="spacer"></div>
+				<span class="manage_form_label">City:</span><input type="text" name="city"{% if details %} value="{{ details['city'] }}{% endif %}"><br><div class="spacer"></div>
+				<span class="manage_form_label">Branch:</span><input type="text" name="branch"{% if details %} value="{{ details['branch'] }}{% endif %}"><br><div class="spacer"></div>
+				<span class="manage_form_label">MAJCOM:</span><input type="text" name="majcom"{% if details %} value="{{ details['majcom'] }}{% endif %}"><br><div class="spacer"></div>
+				<span class="manage_form_label">Lat:</span><input type="number" step="0.0001" name="lat"{% if details %} value="{{ details['lat'] }}{% endif %}" required><br><div class="spacer"></div>
+				<span class="manage_form_label">Lon:</span><input type="number" step="0.0001" name="lon"{% if details %} value="{{ details['lon'] }}{% endif %}" required><br><div class="spacer"></div>
+				<input type="submit" value="Add">
+			</form>
+			<hr>
+	</div>
+	<div class="manage_flex_child">
+		<h2>Add Friend</h2>
+		<hr>
+		<form class="form manage_form_sm" action="/add_friend" method="post">
+			<span class="manage_form_label">First Name:</span><input type="text" name="fname" required><div class="spacer"></div>
+			<span class="manage_form_label">Last Name:</span><input type="text" name="lname" required><div class="spacer"></div>
+			<input type="submit" value="Add">
+		</form>
+		<div class="edit_links">
+			<hr>
+			<h2>Edit Friend</h2>
+			<form class="form manage_form_sm">
+				<select style="width: 95%; margin: 10px;" onchange="javascript:location.href = '/edit_friend/' + this.value;" required>
+				<option selected disabled>Select one...</option>
+				{% for friend in friends %}
+				<option value="{{ friend['friendID'] }}">{{ friend['fname'] }} {{ friend['lname'] }}</option>{% endfor %}
+				</select>
+				<div class="spacer"></div>
+			</form>
+			<hr>
+			<h2>Edit Base</h2>
+			<form class="form manage_form_sm">
+				<select style="width: 95%; margin: 10px;" onchange="javascript:location.href = '/edit_base/' + this.value;" required>
+				<option selected disabled>Select one...</option>
+				{% for base in bases %}
+				<option value="{{ base['baseID'] }}">{{ base['name'] }}</option>{% endfor %}
+				</select>
+			</form>
+			<hr>
+		</div>
+	</div>
+</div>
+{% if current_user.userID in admins %}
+<div class="dashboard_cog">
+    <a href="/login_dashboard"><img class="icon_img" src="{{ url_for('static', filename='images/login_dashboard.png') }}"></a>
+</div>
+{% endif %}
+<div class="settings_cog">
+	<a href="map"><img class="icon_img" src="{{ url_for('static', filename='images/globe.png') }}"></a>
+</div>
+{% endblock %}

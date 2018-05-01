@@ -1,19 +1,63 @@
 {% extends "base.html" %}
 
 {% block content %}
+<div class="modal fade" id="base_modal">
+	<div class="modal-dialog modal-lg">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h2 class="modal-title" id="base_modal_title">Test</h2>
+				<button type="button" class="close" data=dismiss="modal">&times;</button>
+			</div>
+			<div class="modal-body" id="base_modal_body">
+				Modal Body
+			</div>
+		</div>
+	</div>
+</div>
 <div class="container-fluid">
 	<div id="map" class="map_wrapper"></div>
 	<script>
+		var map;
+		{% for base in base_arr %}
+		var {{ base['varname'] }};{% endfor %}
 		function initMap() {
 			var center = {lat: 39, lng: -97};
-			var map = new google.maps.Map(document.getElementById('map'), {
+			var theme = [{"elementType": "geometry","stylers": [{"color": "#ebe3cd"}]},{"elementType": "labels.text.fill","stylers": [{"color": "#523735"}]},{"elementType": "labels.text.stroke","stylers": [{"color": "#f5f1e6"}]},{"featureType": "administrative","elementType": "geometry.stroke","stylers": [{"color": "#c9b2a6"}]},{"featureType": "administrative.country","stylers": [{"color": "#93817c"},{"visibility": "on"},{"weight": 2.5}]},{"featureType": "administrative.land_parcel","stylers": [{"visibility": "off"}]},{"featureType": "administrative.land_parcel","elementType": "geometry.stroke","stylers": [{"color": "#dcd2be"}]},{"featureType": "administrative.land_parcel","elementType": "labels.text.fill","stylers": [{"color": "#ae9e90"}]},{"featureType": "administrative.locality","stylers": [{"visibility": "off"}]},{"featureType": "administrative.neighborhood","stylers": [{"visibility": "off"}]},{"featureType": "administrative.province","stylers": [{"lightness": 10},{"visibility": "on"},{"weight": 2.5}]},{ "featureType": "administrative.province", "elementType": "labels.text", "stylers": [ { "visibility": "off" } ] },{"featureType": "landscape.man_made","stylers": [{"visibility": "off"}]},{"featureType": "landscape.natural","stylers": [{"visibility": "simplified"},{"weight": 5}]},{"featureType": "landscape.natural","elementType": "geometry","stylers": [{"color": "#dfd2ae"}]},{"featureType": "poi","elementType": "geometry","stylers": [{"color": "#dfd2ae"}]},{"featureType": "poi","elementType": "labels.text","stylers": [{"visibility": "off"}]},{"featureType": "poi","elementType": "labels.text.fill","stylers": [{"color": "#93817c"}]},{"featureType": "poi.attraction","stylers": [{"visibility": "off"}]},{"featureType": "poi.business","stylers": [{"visibility": "off"}]},{ "featureType": "poi.park", "stylers": [ { "visibility": "off" } ] },{"featureType": "poi.park","elementType": "geometry.fill","stylers": [{"color": "#a5b076"}]},{"featureType": "poi.park","elementType": "labels.text.fill","stylers": [{"color": "#447530"}]},{"featureType": "road","stylers": [{"visibility": "off"}]},{"featureType": "road","elementType": "geometry","stylers": [{"color": "#f5f1e6"}]},{"featureType": "road","elementType": "labels","stylers": [{"visibility": "off"}]},{"featureType": "road.arterial","elementType": "geometry","stylers": [{"color": "#fdfcf8"}]},{"featureType": "road.highway","elementType": "geometry","stylers": [{"color": "#f8c967"}]},{"featureType": "road.highway","elementType": "geometry.stroke","stylers": [{"color": "#e9bc62"}]},{"featureType": "road.highway.controlled_access","elementType": "geometry","stylers": [{"color": "#e98d58"}]},{"featureType": "road.highway.controlled_access","elementType": "geometry.stroke","stylers": [{"color": "#db8555"}]},{"featureType": "road.local","elementType": "labels.text.fill","stylers": [{"color": "#806b63"}]},{"featureType": "transit","stylers": [{"visibility": "off"}]},{"featureType": "transit.line","elementType": "geometry","stylers": [{"color": "#dfd2ae"}]},{"featureType": "transit.line","elementType": "labels.text.fill","stylers": [{"color": "#8f7d77"}]},{"featureType": "transit.line","elementType": "labels.text.stroke","stylers": [{"color": "#ebe3cd"}]},{"featureType": "transit.station","elementType": "geometry","stylers": [{"color": "#dfd2ae"}]},{"featureType": "water","elementType": "geometry.fill","stylers": [{"color": "#b9b9de"}]},{"featureType": "water","elementType": "labels.text","stylers": [{"visibility": "off"}]},{"featureType": "water","elementType": "labels.text.fill","stylers": [{"color": "#92998d"}]}];
+			map = new google.maps.Map(document.getElementById('map'), {
 				zoom:5.1,
 				center:center,
 				zoomControl:false,
 				gestureHandling:'none',
+				styles: theme,
+				disableDefaultUI: true,
 			});
+			var icons = {
+				af: {url: "{{ url_for('static', filename='images/aflogo_full.png') }}",
+						 anchor: new google.maps.Point(15, 23),
+						 scaledSize: new google.maps.Size(30,28),}
+			};
+			{% for base in base_arr %}
+			{{ base['varname'] }} = new google.maps.Marker({
+				position: {lat: {{ base['lat'] }}, lng: {{ base['lon'] }}}, 
+				icon: icons['af'],
+				map: map});
+			{{ base['varname'] }}_infowindow = new google.maps.InfoWindow({
+				content: "{{ base['name'] }}",
+			});
+			{{ base['varname'] }}.addListener('mouseover', function() { {{ base['varname'] }}_infowindow.open(map, {{ base['varname'] }});});
+			{{ base['varname'] }}.addListener('mouseout', function() { {{ base['varname'] }}_infowindow.close();});
+			{{ base['varname'] }}.addListener('click', function() {
+				$('#base_modal_title').html("{{ base['name'] }}");
+				$('#base_modal_body').load("/base/{{ base['baseID'] }}");
+				$('#base_modal').modal('toggle');
+			});
+			{% endfor %}
 		}
+
 	</script>
 	<script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCzubALED00XuwcKBc3nzTNtQ-QzGxk9Z0&callback=initMap"></script>
+</div>
+<div class="settings_cog">
+	<a href="manage"><img class="icon_img" src="{{ url_for('static', filename='images/settings.png') }}"></a>
 </div>
 {% endblock %}

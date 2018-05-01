@@ -1,0 +1,41 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container">
+	<div style="padding-top: 10vh;"></div>
+	<form class="form manage_form_sm" action="/edit_friend/{{ friend['friendID'] }}" method="post">
+		<h2>{{ friend['fname'] }} {{ friend['lname'] }}</h2>
+		<hr>
+		<span class="manage_form_label">First Name:</span><input type="text" name="fname" value="{{ friend['fname'] }}"><div class="spacer"></div>
+		<span class="manage_form_label">Last Name:</span><input type="text" name="lname" value="{{ friend['lname'] }}"><div class="spacer"></div>
+		<input type="submit" value="Update">
+	</form>
+	<br>
+	<form class="form manage_form_sm" action="/add_job" method="post">
+		<h2>Add Job</h2>
+		<input type="hidden" name="friendID" value="{{ friend['friendID'] }}" required>
+		<span class="manage_form_label">Title:</span><input type="text" name="title" required><div class="spacer"></div>
+		<span class="manage_form_label">Base:</span>
+		<select name="baseID" style="width: 81%; margin: 10px;" required>
+			{% for base in bases %}
+			<option value="{{ base['baseID'] }}">{{ base['name'] }}</option>{% endfor %}
+		</select><div class="spacer"></div>
+		<span class="manage_form_label">Start:</span><input type="date" name="start" required><div class="spacer"></div>
+		<span class="manage_form_label">End:</span><input type="date" name="end" required><div class="spacer"></div>
+		<span class="manage_form_label">Current:</span><input type="hidden" name="current" value="0" required><input type="checkbox" onclick="this.previousSibling.value=1-this.previousSibling.value">
+		<div style="display: inline-block; width: 50px;"></div>TDY: <input type="hidden" name="tdy" value="0" required><input type="checkbox" onclick="this.previousSibling.value=1-this.previousSibling.value"><div class="spacer"></div>
+		<input type="submit" value="Add">
+	</form>
+	<br>
+	<div>
+		<table class="table">
+		<tr><th>Title</th><th>Base</th><th>Start</th><th>End</th><th>Current</th><th>TDY</th></tr>
+		{% for job in jobs %}
+		<tr><td>{{ job['title'] }}</td><td>{{ job['name'] }}</td><td>{{ job['start'] }}</td><td>{{ job['end'] }}</td><td>{{ job['current'] }}</td><td>{{ job['tdy'] }}</td></tr>
+		{% endfor %}
+	</div>
+</div>
+<div class="settings_cog">
+	<a href="manage"><img class="icon_img" src="{{ url_for('static', filename='images/settings.png') }}"></a>
+</div>
+{% endblock %}

@@ -9,5 +9,19 @@
 <script src="{{ url_for('static', filename='js/bootstrap.bundle.js') }}"></script>
 {% endblock %}
 
+{% block header %}
+{% with messages = get_flashed_messages(with_categories=true) %}
+	{% if messages %}
+		{% for category, message in messages %}
+		<div class="alert" style="{% if category == 'success' %}background: #5c5{% elif category == 'error' %}background: #f00{% endif %}">
+		<span class="closebtn" onclick="this.parentElement.style.display='none';">&times;
+		</span>
+		{{ message }}<br>
+		{% endfor %}
+		</div>
+	{% endif %}
+{% endwith %}
+{% endblock %}
+
 {% block content %}
 {% endblock %}

@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container">
+	<div style="margin-top: 5vh;"></div>
+	<h2>Failed Logins</h2>
+	<table class="table">
+	<tr><th>User</th><th>IP</th><th>Count</th></tr>
+	{% for user_dict in logins %}
+	    {% for ip in logins[user_dict] %}
+	        <td>{{ user_dict }}</td><td>{{ ip }}</td><td>{{ logins[user_dict][ip]}}</td></tr>
+	    {% endfor %}
+	{% endfor %}
+	</table>
+<div class="settings_cog">
+	<a href="manage"><img class="icon_img" src="{{ url_for('static', filename='images/settings.png') }}"></a>
+</div>
+{% endblock %}

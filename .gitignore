@@ -2,4 +2,5 @@ server.crt
 server.csr
 server.key
 settings.cfg
+scraper.py
 __pycache__

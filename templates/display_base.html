@@ -1,0 +1,20 @@
+<h3>Description</h3>
+{% if base['city'] %}Located in {{ base['city'] }}<br>{% endif %}
+{% if base['majcom'] %}Part of {{ base['majcom'] }}<br>{% endif %}
+{{ base['descr'] }}
+<br><br>
+{% if friends[0] %}
+<h3>Friends here</h3>
+<table class="table">
+{% for friend in friends %}
+<tr><th>{{ friend['fname'] }} {{ friend['lname'] }}</th><td>{{ friend['title'] }} since {{ friend['start'] }}</td></tr>
+{% endfor %}
+</table>
+{% else %}
+<h3>Friends</h3>
+No Friends here...
+{% endif %}
+<br><br>
+<h3>Visits</h3>
+<hr>
+No visits...
