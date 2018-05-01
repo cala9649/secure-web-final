@@ -1,4 +1,4 @@
-#!/usr/bin/python 
+#!/usr/bin/python3
 
 from flask import Flask, render_template, request, redirect, session, flash
 from flask_login import LoginManager, login_user, logout_user, login_required, current_user
@@ -245,11 +245,14 @@ def manage():
 def search():
     if request.method == "POST":
         success, details = get_base_info_from_search_string(request.form['base'])
+        base_arr = get_bases()
+        bases = Base.query.order_by(Base.name)
+        friends = Friend.query.order_by(Friend.lname)
         if success:
-            return render_template('manage.html', details=details)
+            return render_template('manage.html', details=details, base_arr=base_arr, friends=friends, bases=bases)
         else:
             flash("Search unsuccessful", 'error')
-            return render_template('manage.html')
+            return render_template('manage.html', base_arr=base_arr, friends=friends, bases=bases)
     elif request.method == "GET":
         return render_template('searchbase.html')
 
@@ -311,6 +314,7 @@ def edit_base(baseID):
         base = Base.query.filter_by(baseID=baseID).first()
         if base:
             base.name = escape(request.form['name'])
+            base.city = escape(request.form['city'])
             base.branch = escape(request.form['branch'])
             base.majcom = escape(request.form['majcom'])
             try:
