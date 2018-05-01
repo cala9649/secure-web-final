@@ -24,20 +24,32 @@ input {
 }
 
 .login_form {
-	width: 300px;
-	text-align: center;
-	position: relative;
+	position: absolute;
 	top: 30vh;
+	left: 50%;
+	width: 300px;
+	margin-left: -150px;
+	text-align: center;
 	padding-top: 20px;
 	padding-bottom: 10px;
+	background: white;
+	transition: all 4s;
+	animation: slide-down 2s;
+}
+
+@keyframes slide-down {
+    from {top: -250px;}
+    to {top: 30vh;}
 }
 
 .manage_form_sm {
 	width: 500px;
+	background: white;
+	padding: 5px;
 }
 
 .manage_form_sm > input[type=text] {
-	width: 350px;
+	width: 325px;
 	float: right;
 }
 
@@ -57,6 +69,19 @@ input {
 .map_wrapper {
 	height: 100%;
 	width: 100%;
+}
+
+.map_bg_overlay {
+    position: absolute;
+    height: 100%;
+    width: 100%;
+    background: #555;
+    opacity: 0.25;
+}
+
+.background {
+    position: absolute;
+    top 0;
 }
 
 .display_login {
@@ -143,4 +168,8 @@ input {
 
 .spacer {
 	clear: both;
+}
+
+.text-outline {
+    text-shadow: -2px -2px 1px white, -2px 2px 1px white, 2px -2px 1px white, 2px 2px 1px white;
 }

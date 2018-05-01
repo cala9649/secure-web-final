@@ -1,4 +1,5 @@
 {% extends "base.html" %}
+{% include "flash_messages.html" %}
 
 {% block content %}
 {% with messages = get_flashed_messages(with_categories=true) %}
@@ -14,15 +15,15 @@
 {% endwith %}
 <div class="container" style="display: flex;">
 	<div class="manage_flex_child">
-		<h2>Add Base</h2>
+		<h2 class="text-outline">Add Base</h2>
 			<hr>
-			<h3>Search</h3>
+			<h3 class="text-outline">Search</h3>
 			<form class="form manage_form_sm" action="/search" method="post">
 				</span><input type="text" name="base" placeholder="Base Name" style="float: none" required></input>
 				<input type="submit" value="Search">
 			</form>
 			<hr>
-			<h3>{% if details %}Results{% else %}Manually{% endif %}</h3>
+			<h3 class="text-outline">{% if details %}Results{% else %}Manually{% endif %}</h3>
 			<form class="form manage_form_sm" action="/add_base" method="post">
 				<span class="manage_form_label">Name:</span><input type="text" name="name"{% if details %} value="{{ details['name'] }}{% endif %}" required><br><div class="spacer"></div>
 				<span class="manage_form_label">City:</span><input type="text" name="city"{% if details %} value="{{ details['city'] }}{% endif %}"><br><div class="spacer"></div>
@@ -35,7 +36,7 @@
 			<hr>
 	</div>
 	<div class="manage_flex_child">
-		<h2>Add Friend</h2>
+		<h2 class="text-outline">Add Friend</h2>
 		<hr>
 		<form class="form manage_form_sm" action="/add_friend" method="post">
 			<span class="manage_form_label">First Name:</span><input type="text" name="fname" required><div class="spacer"></div>
@@ -44,7 +45,7 @@
 		</form>
 		<div class="edit_links">
 			<hr>
-			<h2>Edit Friend</h2>
+			<h2 class="text-outline">Edit Friend</h2>
 			<form class="form manage_form_sm">
 				<select style="width: 95%; margin: 10px;" onchange="javascript:location.href = '/edit_friend/' + this.value;" required>
 				<option selected disabled>Select one...</option>
@@ -54,7 +55,7 @@
 				<div class="spacer"></div>
 			</form>
 			<hr>
-			<h2>Edit Base</h2>
+			<h2 class="text-outline">Edit Base</h2>
 			<form class="form manage_form_sm">
 				<select style="width: 95%; margin: 10px;" onchange="javascript:location.href = '/edit_base/' + this.value;" required>
 				<option selected disabled>Select one...</option>
@@ -75,3 +76,5 @@
 	<a href="map"><img class="icon_img" src="{{ url_for('static', filename='images/globe.png') }}"></a>
 </div>
 {% endblock %}
+
+{% include "map_bg.html" %}
