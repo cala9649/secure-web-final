@@ -72,7 +72,7 @@ input {
 }
 
 .map_bg_overlay {
-    position: absolute;
+    position: fixed;
     height: 100%;
     width: 100%;
     background: #555;
@@ -80,8 +80,10 @@ input {
 }
 
 .background {
-    position: absolute;
+    position: fixed;
     top 0;
+    width: 100%;
+    height: 100%;
 }
 
 .display_login {
@@ -110,14 +112,14 @@ input {
 }
 
 .settings_cog {
-	position: absolute;
+	position: fixed;
 	right: 30px;
 	bottom: 30px;
 	z-index: 5;
 }
 
 .dashboard_cog {
-	position: absolute;
+	position: fixed;
 	left: 30px;
 	bottom: 30px;
 	z-index: 5;
